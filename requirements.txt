@@ -1,0 +1,5 @@
+numpy==1.26.4
+torch==2.6
+tritonclient==2.56.0
+langchain-core==0.3.58
+langchain-community==0.3.23

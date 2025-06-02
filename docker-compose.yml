@@ -1,0 +1,22 @@
+services:
+  triton:
+    image: tritonserver:24.08-py3-transformers
+    build:
+      context: .
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    volumes:
+      - ./model-repository:/models
+    environment:
+      - MODEL_REPOSITORY=/models
+    command: ['tritonserver', '--model-repository=/models']

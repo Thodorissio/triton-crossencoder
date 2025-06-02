@@ -1,0 +1,31 @@
+name: "bge-reranker-v2-m3"
+backend: "python"
+max_batch_size: 8
+
+input [
+  {
+    name: "INPUT_PAIRS"
+    data_type: TYPE_STRING
+    dims: [ 2 ]
+  }
+]
+
+output [
+  {
+    name: "SCORES"
+    data_type: TYPE_FP32
+    dims: [ -1 ]
+  }
+]
+
+instance_group [
+  {
+    kind: KIND_GPU
+    count: 1
+  }
+]
+
+dynamic_batching {
+  max_queue_delay_microseconds: 100000
+  preferred_batch_size: [4, 8]
+}
