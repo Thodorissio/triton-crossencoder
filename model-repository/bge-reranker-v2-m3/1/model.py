@@ -27,11 +27,9 @@ class TritonPythonModel:
 
         self.activation = torch.nn.Sigmoid()
 
-        # Get input/output names from config
         input_config = pb_utils.get_input_config_by_name(model_config, "INPUT_PAIRS")
         output_config = pb_utils.get_output_config_by_name(model_config, "SCORES")
 
-        # Store data types
         self.input_dtype = pb_utils.triton_string_to_numpy(input_config["data_type"])
         self.output_dtype = pb_utils.triton_string_to_numpy(output_config["data_type"])
 

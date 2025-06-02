@@ -68,7 +68,6 @@ class TritonCrossEncoder(BaseCrossEncoder):
 
 
 if __name__ == "__main__":
-    # Example usage
     reranker = TritonCrossEncoder(
         triton_url="localhost:8001", model_name="bge-reranker-v2-m3"
     )
