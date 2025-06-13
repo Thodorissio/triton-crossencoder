@@ -34,3 +34,32 @@ pip install -r requirements.txt
 ```bash
 python reranker.py
 ```
+
+## GPU Configuration Notes
+
+If you have more than one GPU, there are several useful parameters you can set:
+
+- Inside docker-compose.yml:
+```yaml
+    deploy:
+      resources:
+        reservations:
+            devices:
+                - driver: nvidia
+                  capabilities: [gpu]
+                  count: 2 # Number of GPUs to use
+                  gpu_ids: [ '0' , '1' ] # IDs of the GPUs to use (SHOULD NOT HAVE SET COUNT)
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0,1 # IDs of the GPUs to use
+```
+
+- Inside config.pbtxt:
+```protobuf
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ] # IDs of the GPUs to use. Id that container sees (e.g. if gpu_ids: [ '1' ], inside container it will be 0)
+  }
+]
+```
